@@ -185,52 +185,54 @@ class _MainDisplayState extends State<MainDisplay> {
           ),
         ],
       ),
-      body: BlocBuilder<OrdersBloc, OrdersState>(
-        builder: (
-          BuildContext context,
-          OrdersState state,
-        ) {
-          if (state.orders.isEmpty) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const <Widget>[
-                  Text(
-                    '...',
-                  ),
-                ],
+      body: DefaultTextStyle.merge(
+        style: const TextStyle(
+          fontSize: 64,
+          fontWeight: FontWeight.bold,
+        ),
+        child: BlocBuilder<OrdersBloc, OrdersState>(
+          builder: (
+            BuildContext context,
+            OrdersState state,
+          ) {
+            if (state.orders.isEmpty) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const <Widget>[
+                    Text(
+                      '¡Bienvenido!',
+                    ),
+                  ],
+                ),
+              );
+            }
+            return Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 30,
+              ),
+              child: ListView.builder(
+                itemCount: state.orders.length,
+                itemBuilder: (
+                  BuildContext context,
+                  int index,
+                ) {
+                  return GestureDetector(
+                    onDoubleTap: () {
+                      _removeOrder(
+                        order: state.orders[index],
+                      );
+                    },
+                    child: Text(
+                      state.orders[index],
+                      textAlign: TextAlign.center,
+                    ),
+                  );
+                },
               ),
             );
-          }
-          return Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 30,
-            ),
-            child: ListView.builder(
-              itemCount: state.orders.length,
-              itemBuilder: (
-                BuildContext context,
-                int index,
-              ) {
-                return GestureDetector(
-                  onDoubleTap: () {
-                    _removeOrder(
-                      order: state.orders[index],
-                    );
-                  },
-                  child: Text(
-                    state.orders[index],
-                    style: const TextStyle(
-                      fontSize: 64,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                );
-              },
-            ),
-          );
-        },
+          },
+        ),
       ),
     );
   }
