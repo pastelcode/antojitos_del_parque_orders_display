@@ -31,7 +31,7 @@ class OrdersBloc extends HydratedBloc<OrdersEvent, OrdersState> {
     final containsOrder = state.orders.contains(
       event.order,
     );
-    if (containsOrder) {
+    if (containsOrder || event.order.isEmpty) {
       return;
     }
     emit(
@@ -48,9 +48,6 @@ class OrdersBloc extends HydratedBloc<OrdersEvent, OrdersState> {
     RemoveOrder event,
     Emitter<OrdersState> emit,
   ) {
-    state.orders.remove(
-      event.order,
-    );
     final filteredList = state.orders.where(
       (
         String element,
