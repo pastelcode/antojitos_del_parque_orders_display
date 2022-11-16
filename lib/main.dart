@@ -132,6 +132,7 @@ class _MainDisplayState extends State<MainDisplay> {
               child: TextField(
                 controller: _controller,
                 autofocus: true,
+                keyboardType: TextInputType.number,
                 focusNode: focusNode,
                 onSubmitted: (
                   String value,
@@ -211,7 +212,11 @@ class _MainDisplayState extends State<MainDisplay> {
               padding: const EdgeInsets.symmetric(
                 horizontal: 30,
               ),
-              child: ListView.builder(
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 5,
+                ),
                 itemCount: state.orders.length,
                 itemBuilder: (
                   BuildContext context,
